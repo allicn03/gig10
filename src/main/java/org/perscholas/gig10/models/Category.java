@@ -25,5 +25,8 @@ public class Category {
     String name;
     Date startDate;
     Date EndDate;
-
+    @ManyToOne
+    Group group;
+    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy = "category")
+    Set<Transaction> transactions = new TreeSet<>();
 }

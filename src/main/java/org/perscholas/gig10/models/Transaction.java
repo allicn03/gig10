@@ -25,4 +25,6 @@ public class Transaction {
     BigDecimal total;
     Date date;
 
+    @ManyToOne
+    Category category;
 }

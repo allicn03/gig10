@@ -8,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +23,10 @@ public class Group {
     Long id;
 
     String name;
+
+    @ManyToOne()
+    User user;
+    @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy = "group")
+    Set<Category> categories = new TreeSet<>();
 
 }
