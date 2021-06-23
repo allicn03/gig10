@@ -25,7 +25,8 @@ public class Group {
     String name;
 
     @ManyToOne()
-    User user;
+    Budget budget;
+
     @OneToMany(cascade=CascadeType.PERSIST, fetch=FetchType.LAZY, mappedBy = "group")
     Set<Category> categories = new TreeSet<>();
 
