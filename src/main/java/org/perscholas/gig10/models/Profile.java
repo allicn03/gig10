@@ -11,15 +11,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="users")
-public class User {
-
+@Table(name="profiles")
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String username;
-    String email;
-    String password;
-
+    Double taxRate;
+    Double mileageStart;
+    Double mileageEnd;
 }

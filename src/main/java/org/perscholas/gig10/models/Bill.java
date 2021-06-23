@@ -11,15 +11,14 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="users")
-public class User {
-
+@Table(name="bills")
+public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String username;
-    String email;
-    String password;
+    String name;
+    Double amount;
+    Date dueDate;
 
 }
