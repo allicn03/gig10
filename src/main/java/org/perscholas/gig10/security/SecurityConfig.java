@@ -2,6 +2,7 @@ package org.perscholas.gig10.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
@@ -17,4 +18,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         auth.userDetailsService(userDetailsService);
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/js/*","/css/*" ).permitAll()
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/**")
+                .hasRole("USER")
+                .and()
+                .formLogin().loginPage("/login")
+                .defaultSuccessUrl("/budgets")
+                .permitAll().and().logout().logoutSuccessUrl("/")
+                .permitAll();
+    }
 }
