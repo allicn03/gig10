@@ -1,9 +1,6 @@
 package org.perscholas.gig10.models;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,10 +23,15 @@ public class User {
     Long id;
 
     String username;
+
     String password;
+    @Transient
+    String confirmPassword;
     @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "users")
     Set<Budget> budgets = new TreeSet<>();
     @OneToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER, mappedBy="user")
     Set<Authority> authorities = new HashSet<>();
+//    @OneToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER, mappedBy="user")
+//    Set<Profile> profiles = new TreeSet<>();
 
 }

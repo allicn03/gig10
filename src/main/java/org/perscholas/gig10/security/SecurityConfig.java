@@ -23,13 +23,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/js/*","/css/*" ).permitAll()
+                .antMatchers("/register").permitAll()
 //                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/**")
-                .hasRole("USER")
-                .and()
-                .formLogin().loginPage("/login")
-                .defaultSuccessUrl("/budgets")
-                .permitAll().and().logout().logoutSuccessUrl("/")
-                .permitAll();
+                .antMatchers("/**").permitAll()
+                .antMatchers("/budgets").permitAll();
+//                .hasRole("USER")
+//                .and()
+//                .formLogin().loginPage("/login")
+//                .defaultSuccessUrl("/budget")
+//                .permitAll().and().logout().logoutSuccessUrl("/")
+//                .permitAll();
     }
 }
