@@ -1,15 +1,12 @@
 package org.perscholas.gig10.models;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
-@Data
+@Getter@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
@@ -20,6 +17,7 @@ public class Authority implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String authority;
+    @ToString.Exclude
     @ManyToOne
     User user;
 }

@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
@@ -27,8 +28,10 @@ public class User {
     String password;
     @Transient
     String confirmPassword;
+    @ToString.Exclude
     @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "users")
     Set<Budget> budgets = new TreeSet<>();
+    @ToString.Exclude
     @OneToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER, mappedBy="user")
     Set<Authority> authorities = new HashSet<>();
 //    @OneToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER, mappedBy="user")
