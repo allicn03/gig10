@@ -1,30 +1,74 @@
 package org.perscholas.gig10.models;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@FieldDefaults(level= AccessLevel.PRIVATE)
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
-public class Budget {
+@NamedEntityGraph(name = "Budget.users", attributeNodes = @NamedAttributeNode("users"))
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Budget implements Comparable<Budget>
+{
+    private Long id;
+    private String name;
+    private Set<User> users = new HashSet<>();
+    private Set<Group> groups = new TreeSet<>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
+    @Id @GeneratedValue
+    public Long getId()
+    {
+        return id;
+    }
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+    public String getName()
+    {
+        return name;
+    }
+    public void setName(String name)
+    {
+        this.name = name;
+    }
     @ManyToMany
-    @JoinTable(inverseJoinColumns = @JoinColumn(name="user_id"),joinColumns = @JoinColumn(name="budget_id") )
-    Set<User> users = new HashSet<>();
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "budget")
-    Set<Group> groups = new TreeSet<>();
+    @JoinTable(inverseJoinColumns=@JoinColumn(name="user_id"), joinColumns=@JoinColumn(name="budget_id"))
+    public Set<User> getUsers()
+    {
+        return users;
+    }
+    public void setUsers(Set<User> users)
+    {
+        this.users = users;
+    }
+    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="budget")
+    public Set<Group> getGroups()
+    {
+        return groups;
+    }
+    public void setGroups(Set<Group> groups)
+    {
+        this.groups = groups;
+    }
 
+    @Override
+    public int compareTo(Budget budget)
+    {
+        return this.id.compareTo(budget.getId());
+    }
 }
